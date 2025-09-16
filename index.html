@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+    body {
+display: flex;
+flex-direction: column;
+text-align: center;
+justify-content: center;
+align-items: center;
+margin: 20px;
+padding: 200px;
+font-family: Poppins;
+}
+
+button {
+width: 400px;
+height: 200px;
+border-radius: 30px;
+border: 2px solid rgb(46, 40, 29);
+color: rgb(255, 255, 255);
+background-color: rgb(83, 68, 45);
+font-family: Poppins;
+font-size: 20px;
+transition: all 500ms ease;
+margin: 15px;
+
+}
+button:hover {
+background: white;
+color: black;
+border: 2px solid black;
+}
+</style>
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Gra klikacz</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <p id="score">Punkty: 0</p>
+  <p id="time">Czas: 10</p>
+  <button id="plus">+1</button>
+  <button id="minus">-1</button>
+  <p id="msg"></p>
+  <button id="buy">Kup auto-klikacz(20)</button>
+  <script src="script.js"></script>
+</body>
+</html>
+    <script>
+       let score=0,time=10,timer,auto=false;
+const s=document.getElementById("score"),
+      t=document.getElementById("time"),
+      m=document.getElementById("msg"),
+      p=document.getElementById("plus"),
+      mi=document.getElementById("minus"),
+      b=document.getElementById("buy");
+
+function update(){
+  s.textContent="Punkty: "+score;
+  if(score===10)m.textContent="Gratulacje, masz 10 punktów! 🎉";
+  if(score===50)m.textContent="Wow, 50 punktów, jesteś mistrzem klikora! 🏆";
+}
+
+function clicker(v){
+  score+=v; 
+  p.style.backgroundColor=mi.style.backgroundColor="#"+Math.floor(Math.random()*16777215).toString(16);
+  update();
+}
+
+p.onclick=()=>clicker(1);
+mi.onclick=()=>clicker(-1);
+
+b.onclick=()=>{
+  if(score>=20&&!auto){
+    score-=20;auto=true;update();
+    setInterval(()=>{score++;update()},1000);
+  }
+};
+
+timer=setInterval(()=>{
+  time--;t.textContent="Czas: "+time;
+  if(time<=0){clearInterval(timer);p.disabled=mi.disabled=b.disabled=true;m.textContent="Koniec! Wynik: "+score;}
+},1000);
+    </script>
+</body>
+</html>
